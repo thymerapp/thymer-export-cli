@@ -39,6 +39,9 @@ func isValidFilename(filename string) bool {
 	if len(filename) <= 3 || len(filename) >= 255 {
 		return false
 	}
+	if filename == "README.txt" {
+		return true
+	}
 
 	var alnumRegex = regexp.MustCompile(`^[a-zA-Z0-9]+$`)
 
@@ -123,7 +126,7 @@ func walkBlobsInDir(root string, key []byte, operation EncDecOperation) error {
 			return err
 		}
 
-		if !info.IsDir() && !strings.HasSuffix(path, ".json") { // binary files only
+		if !info.IsDir() && !strings.HasSuffix(path, ".json") && !strings.HasSuffix(path, ".txt") { // binary files only
 			var outBytes []byte
 			var err error
 
